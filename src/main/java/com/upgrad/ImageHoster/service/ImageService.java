@@ -10,6 +10,7 @@ public interface ImageService{
     Image getByTitle(String title);
     Image getByTitleWithJoin(String title);
     void deleteByTitle(Image image);
+    Image getById(int id);
     void save(Image image);
     void update(Image image);
 }
