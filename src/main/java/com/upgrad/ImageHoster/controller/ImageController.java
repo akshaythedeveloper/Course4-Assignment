@@ -1,8 +1,10 @@
 package com.upgrad.ImageHoster.controller;
 
+import com.upgrad.ImageHoster.model.Comment;
 import com.upgrad.ImageHoster.model.Image;
 import com.upgrad.ImageHoster.model.Tag;
 import com.upgrad.ImageHoster.model.User;
+import com.upgrad.ImageHoster.service.CommentService;
 import com.upgrad.ImageHoster.service.ImageService;
 import com.upgrad.ImageHoster.service.TagService;
 import com.upgrad.ImageHoster.service.UserService;
@@ -33,6 +35,9 @@ public class ImageController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CommentService commentService;
 
     /**
      * This controller method returns all the images that have been
@@ -105,7 +110,7 @@ public class ImageController {
             Image newImage = new Image(title, description, uploadedImageData, currUser, imageTags);
             imageService.save(newImage);
 
-            return "redirect:/images/" + newImage.getId(); //Fixing issue 2
+            return "redirect:/images/" + newImage.getId(); //Fixing image title issue
         }
     }
 
@@ -147,15 +152,16 @@ public class ImageController {
         return "redirect:/";
     }
 
+
     /**
-     * This controller method displays an image edit form, so the user
-     * can update the image's description and uploaded file
-     *
-     * @param title title of the image that we want to edit
-     * @param model used to pass data to the view for rendering
-     *
-     * @return the image edit form view
-     */
+    * This controller method displays an image edit form, so the user
+    * can update the image's description and uploaded file
+    *
+    * @param title title of the image that we want to edit
+    * @param model used to pass data to the view for rendering
+    *
+    * @return the image edit form view
+    */
     @RequestMapping("/images/{title}/edit")
     public String editImage(@PathVariable String title, Model model) {
         Image image = imageService.getByTitleWithJoin(title);

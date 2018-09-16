@@ -38,6 +38,9 @@ public class Image implements Serializable{
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    @OneToMany (fetch = FetchType.EAGER, mappedBy = "image")
+    private List<Comment> comments = new ArrayList<Comment>();
+
     // These  annotations creates a join table for many-to-many relationships
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name="Image_Tag",
@@ -107,6 +110,10 @@ public class Image implements Serializable{
     public List<Tag> getTags() { return tags; }
 
     public void setTags(List<Tag> tags) { this.tags = tags; }
+
+    public List<Comment> getComments() { return comments; }
+
+    public void setComments (List<Comment> comments) { this.comments = comments; }
 
 
 }
